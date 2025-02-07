@@ -18,26 +18,14 @@ chrome.runtime.onInstalled.addListener(() => {
   chrome.action.disable();
 
   chrome.declarativeContent.onPageChanged.removeRules(undefined, async () => {
-    const imageData16 = await loadImageData(
-      chrome.runtime.getURL("icon/16.png"),
-      16,
-    );
-    const imageData32 = await loadImageData(
-      chrome.runtime.getURL("icon/32.png"),
-      32,
-    );
-    const imageData48 = await loadImageData(
-      chrome.runtime.getURL("icon/48.png"),
-      48,
-    );
-    const imageData96 = await loadImageData(
-      chrome.runtime.getURL("icon/96.png"),
-      96,
-    );
-    const imageData128 = await loadImageData(
-      chrome.runtime.getURL("icon/128.png"),
-      128,
-    );
+    const [imageData16, imageData32, imageData48, imageData96, imageData128] =
+      await Promise.all([
+        loadImageData(chrome.runtime.getURL("icon/16.png"), 16),
+        loadImageData(chrome.runtime.getURL("icon/32.png"), 32),
+        loadImageData(chrome.runtime.getURL("icon/48.png"), 48),
+        loadImageData(chrome.runtime.getURL("icon/96.png"), 96),
+        loadImageData(chrome.runtime.getURL("icon/128.png"), 128),
+      ]);
 
     chrome.declarativeContent.onPageChanged.addRules([
       {
@@ -54,11 +42,11 @@ chrome.runtime.onInstalled.addListener(() => {
           new chrome.declarativeContent.ShowAction(),
           new chrome.declarativeContent.SetIcon({
             imageData: {
-              "16": await imageData16,
-              "32": await imageData32,
-              "48": await imageData48,
-              "96": await imageData96,
-              "128": await imageData128,
+              "16": imageData16,
+              "32": imageData32,
+              "48": imageData48,
+              "96": imageData96,
+              "128": imageData128,
             },
           }),
         ],
