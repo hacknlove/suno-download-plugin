@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "zip": "zip -r dist.zip dist",
-    "lint": "eslint ./src --fix"
+    "lint": "eslint ./src --fix",
+    "prettier": "prettier --write ."
   },
   "dependencies": {
     "jszip": "^3.10.1",

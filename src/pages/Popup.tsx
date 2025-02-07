@@ -102,6 +102,7 @@ async function downloadAllSongs(playlistId: string, firstPage: any) {
 const playlistRegExp = /^https:\/\/suno\.com\/playlist\/([a-f0-9-]+)/;
 
 export default function Popup() {
+  // return <div className="progress"></div>;
   const [num_total_results, setNumTotalResults] = useState(0);
 
   useEffect(() => {
@@ -115,6 +116,7 @@ export default function Popup() {
       const playlistId = tabs[0].url?.match(playlistRegExp)?.[1];
 
       if (!playlistId) {
+        setNumTotalResults(-1);
         return;
       }
 
@@ -131,6 +133,10 @@ export default function Popup() {
 
   if (!num_total_results) {
     return <div className="loading">Loading...</div>;
+  }
+
+  if (num_total_results === -1) {
+    return null;
   }
 
   return (
